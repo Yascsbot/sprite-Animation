@@ -7,7 +7,9 @@ class GameEngine {
         this.ctx = null;
 
         // Everything that will be updated and drawn each frame
-        this.entities = [];
+        this.entity_manager = new EntityManager();
+        this.render_system = new RenderSystem();
+        this.physics_system = new PhysicsSystem();
 
         // Information on the input
         this.click = null;
@@ -25,6 +27,24 @@ class GameEngine {
         this.ctx = ctx;
         this.startInput();
         this.timer = new Timer();
+
+        this.physics_system.init();
+        this.render_system.init();
+
+        // player
+        let ent = this.entity_manager.add_entity();
+        ent.add_transform();
+        ent.transform.pos.set(0, 0);
+        ent.add_rigidbody();
+        ent.rigidbody.vel.set(20, 0);
+        ent.add_animation();
+        ent.animation.spritesheet = ASSET_MANAGER.getAsset("./sonic.png");
+        ent.animation.src_offset.set(1, 0);
+        ent.animation.src_size.set(41, 41);
+        ent.animation.dest_size.set(41 * 3, 41 * 3);
+        ent.animation.frame_count = 3;
+        ent.animation.frame_duration = .1;
+        //
     };
 
     start() {
@@ -76,42 +96,11 @@ class GameEngine {
         this.ctx.canvas.addEventListener("keyup", event => this.keys[event.key] = false);
     };
 
-    addEntity(entity) {
-        this.entities.push(entity);
-    };
-
-    draw() {
-        // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-
-        // Draw latest things first
-        for (let i = this.entities.length - 1; i >= 0; i--) {
-            this.entities[i].draw(this.ctx, this);
-        }
-    };
-
-    update() {
-        let entitiesCount = this.entities.length;
-
-        for (let i = 0; i < entitiesCount; i++) {
-            let entity = this.entities[i];
-
-            if (!entity.removeFromWorld) {
-                entity.update();
-            }
-        }
-
-        for (let i = this.entities.length - 1; i >= 0; --i) {
-            if (this.entities[i].removeFromWorld) {
-                this.entities.splice(i, 1);
-            }
-        }
-    };
-
     loop() {
         this.clockTick = this.timer.tick();
-        this.update();
-        this.draw();
+        this.physics_system.update(this.clockTick);
+        this.render_system.update(this.clockTick);
+
     };
 
 };

@@ -11,7 +11,10 @@ class Animator {
     };
     drawFrame(tick, ctx, x, y) {
         this.elapsedTime += tick; 
- if (this.elapsedTime > this.totalTime) this.elapsedTime-= this.totalTime;
+
+        if (this.elapsedTime > this.totalTime) { 
+            this.elapsedTime-= this.totalTime; 
+        }
         // if (this.isDone()) {
         //     if (this.loop) {
         //         this.elapsedTime -= this.totalTime;
@@ -28,8 +31,8 @@ class Animator {
         //      this.width, this.height, x, y, this.width, this.height);
 
         ctx.drawImage(this.spriteSheet, 
-            this.xStart + this.width * frame, this.yStart,
-             this.width, this.height, x, y, this.width*2, this.height*2);
+                      this.xStart + this.width * frame, this.yStart,
+                      this.width, this.height, x, y, this.width*2, this.height*2);
     };
     currentFrame() {
         return Math.floor(this.elapsedTime / this.frameDuration); //tells us how many frames have been displayed to get to the current time
