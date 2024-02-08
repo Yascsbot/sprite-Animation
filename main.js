@@ -6,7 +6,10 @@ ASSET_MANAGER.queueDownload("./sonic.png");
 
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
-	const ctx = canvas.getContext("2d");
+	const ctx = canvas.getContext("2d", {
+		antialias: false,
+		depth: true,
+	  });
 	ctx.imageSmoothingEnabled = false;
 
 	gameEngine.init(ctx);

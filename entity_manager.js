@@ -109,8 +109,8 @@ class EntityQuery{
         while (this.index < entities.length) {
             let ent = entities[this.index];
             if (ent.id != 0){
-                let include_passed = ent.mask & this.include == this.include;
-                let exclude_passed = ent.mask & this.exclude == 0;
+                let include_passed = ((ent.mask & this.include) == this.include);
+                let exclude_passed = ((ent.mask & this.exclude) == 0);
                 if (include_passed && exclude_passed) { // found an entity matching our criteria
                     this.entity = ent;  // update our entity reference
                     return true;     // return the entity

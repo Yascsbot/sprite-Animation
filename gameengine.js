@@ -35,6 +35,18 @@ class GameEngine {
         let ent = this.entity_manager.add_entity();
         ent.add_transform();
         ent.transform.pos.set(0, 0);
+        ent.add_animation();
+        ent.animation.spritesheet = ASSET_MANAGER.getAsset("./sonic.png");
+        ent.animation.src_offset.set(1, 0);
+        ent.animation.src_size.set(41, 41);
+        ent.animation.dest_size.set(41 * 20, 41 * 20);
+        ent.animation.frame_count = 1;
+        ent.animation.frame_duration = .1;
+
+        // background
+        ent = this.entity_manager.add_entity();
+        ent.add_transform();
+        ent.transform.pos.set(0, 0);
         ent.add_rigidbody();
         ent.rigidbody.vel.set(20, 0);
         ent.add_animation();
@@ -42,7 +54,7 @@ class GameEngine {
         ent.animation.src_offset.set(1, 0);
         ent.animation.src_size.set(41, 41);
         ent.animation.dest_size.set(41 * 3, 41 * 3);
-        ent.animation.frame_count = 3;
+        ent.animation.frame_count = 6;
         ent.animation.frame_duration = .1;
         //
     };

@@ -6,7 +6,7 @@ class RenderSystem{
     }
 
     init(){
-
+        // todo: change context to "webgl" so we can order objects on-screen by depth value
     }
 
     update(dt){
@@ -23,7 +23,6 @@ class RenderSystem{
                 ent.animation.frame_index += 1;
                 ent.animation.frame_index %= ent.animation.frame_count;
             }
-
 
             gameEngine.ctx.drawImage(ent.animation.spritesheet,
                 ent.animation.src_offset.x + ent.animation.frame_index * ent.animation.src_size.x, 
